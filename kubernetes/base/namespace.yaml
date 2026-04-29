@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: platform-system
+  labels:
+    component: management-plane
+    managed-by: hybrid-kubernetes-pattern
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: workload-system
+  labels:
+    component: workload-plane
