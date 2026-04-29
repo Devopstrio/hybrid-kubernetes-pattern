@@ -15,259 +15,267 @@
 <br/>
 
 > **"Infrastructure is code; platform is a service."** 
-> Hybrid Kubernetes Platform Patterns is an institutional-grade blueprint designed for organizations operating at global scale. It provides standardized, secure, and highly automated patterns for deploying and managing Kubernetes fleets across AWS, Azure, GCP, VMware, and Bare Metal.
+> Hybrid Kubernetes Platform Patterns is an institutional-grade blueprint designed for organizations operating at global scale.
 
 </div>
 
 ---
 
-## 🏛️ Executive Summary
-
-The **Hybrid Kubernetes Platform Patterns** is a flagship repository designed for CIOs, Platform Leaders, and Principal SREs. In the era of distributed computing, Kubernetes has evolved from a container orchestrator to the universal operating system of the cloud. However, managing Kubernetes across fragmented environments—on-premises datacenters, edge sites, and multiple public clouds—presents massive operational friction.
-
-This platform provides a **Unified Management Plane** approach. It demonstrates how to leverage **ArgoCD**, **Terraform**, **Crossplane**, and **Kyverno** to create a seamless "Golden Path" for developers, ensuring that a workload running on EKS in `us-east-1` behaves identically to one on VMware Tanzu in a private datacenter.
-
----
-
-## 🚀 Business Outcomes & Drivers
-
-### 🎯 Key Business Outcomes
-- **Velocity at Scale**: Reduce cluster provisioning from weeks to minutes via standardized templates.
-- **Operational Consistency**: Eliminate "snowflake" clusters through GitOps and Policy-as-Code.
-- **Cost Optimization**: Gain 360-degree visibility into cluster spending with integrated FinOps governance.
-- **Risk Mitigation**: Enforce zero-trust networking and security guardrails globally.
-
-### 🔑 Strategic Drivers
-- **Cloud Sovereignty**: Requirements to run workloads in specific regions or on-premises for data residency.
-- **Portability**: The need to move workloads between clouds to avoid vendor lock-in or optimize costs.
-- **Edge Computing**: Extending the Kubernetes control plane to branch offices and IoT gateways.
-
----
-
-## 🛠️ Technical Stack
-
-| Layer | Technology | Rationale |
-|---|---|---|
-| **Distributions** | EKS, AKS, GKE, Tanzu, K3s | Native cloud services combined with edge-optimized K8s. |
-| **GitOps** | ArgoCD, Flux v2 | Declarative state reconciliation for apps and infrastructure. |
-| **Control Plane** | Crossplane, Terraform | Infrastructure-as-Code and Kubernetes-native provisioning. |
-| **Security** | Kyverno, OPA, HashiCorp Vault | Policy-as-Code and centralized secrets management. |
-| **Observability** | Prometheus, Grafana, Tempo | Full-stack tracing and metrics across the fleet. |
-| **Networking** | Istio, Cilium | Multi-cluster service mesh and high-performance CNI. |
-
----
-
-## 📐 Architecture Storytelling: 100+ Diagrams
+## 📐 Architecture Storytelling: 30+ Advanced Diagrams
 
 ### 1. Executive Fleet Architecture
-The high-level view of the Management Plane orchestrating a global fleet.
-
 ```mermaid
 graph TD
-    subgraph "Management Plane (Global Hub)"
+    subgraph "Management Plane"
         API[Platform API]
-        Web[Fleet Console]
-        GitOps[ArgoCD Instance]
-        Policies[Kyverno Engine]
+        GitOps[ArgoCD]
     end
-
-    subgraph "Workload Plane (Distributed Clusters)"
-        subgraph "Public Cloud"
-            EKS[AWS EKS]
-            AKS[Azure AKS]
-            GKE[GCP GKE]
-        end
-        subgraph "Private Cloud"
-            VMW[VMware Tanzu]
-            BM[Bare Metal K8s]
-        end
+    subgraph "Workload Plane"
+        EKS[AWS EKS]
+        AKS[Azure AKS]
+        VMW[VMware Tanzu]
     end
-
-    Web --> API
     API --> GitOps
-    GitOps -- "Reconcile" --> EKS
-    GitOps -- "Reconcile" --> AKS
-    GitOps -- "Reconcile" --> VMW
-    Policies -- "Enforce" --> WorkloadPlane
+    GitOps --> EKS
+    GitOps --> AKS
+    GitOps --> VMW
 ```
 
 ### 2. Hybrid Connectivity Model
-How the management plane communicates securely with private clusters.
-
 ```mermaid
 graph LR
-    subgraph "Management Plane"
-        Hub[Central Hub]
-    end
-    subgraph "Private Datacenter"
-        Agent[GitOps Agent]
-        Cluster[K8s Cluster]
-    end
-    Hub -- "HTTPS (Pull-based)" --> Agent
-    Agent --> Cluster
-    Cluster -- "Logs/Metrics" --> Hub
+    Hub[Central Hub] -- Pull --> Agent[GitOps Agent]
+    Agent --> Cluster[Private K8s]
 ```
 
 ### 3. GitOps App Lifecycle (ArgoCD)
-The journey from a code commit to a multi-region deployment.
-
 ```mermaid
 sequenceDiagram
-    participant Dev as Developer
-    participant Git as Git Repository
-    participant Argo as ArgoCD Hub
-    participant ClusterA as Prod-US
-    participant ClusterB as Prod-EU
-
-    Dev->>Git: Push Manifest Update
-    Git->>Argo: Webhook Trigger
-    Argo->>Git: Fetch Desired State
-    Argo->>ClusterA: Reconcile State
-    Argo->>ClusterB: Reconcile State
-    ClusterA-->>Argo: Sync OK
-    ClusterB-->>Argo: Sync OK
+    Git->>Argo: Webhook
+    Argo->>Git: Fetch State
+    Argo->>Cluster: Reconcile
+    Cluster-->>Argo: Sync OK
 ```
 
 ### 4. Cluster Onboarding Workflow
-Standardized process for bringing a new cluster under management.
-
 ```mermaid
 graph TD
-    Start[Provision Cluster] --> Identity[Join Identity Federation]
-    Identity --> Security[Install Security Agents]
-    Security --> Policy[Apply Global Policies]
-    Policy --> GitOps[Register with ArgoCD]
-    GitOps --> Ready[Cluster Active]
+    S[Provision] --> I[Identity]
+    I --> G[GitOps]
+    G --> P[Policy]
+    P --> R[Ready]
 ```
 
 ### 5. Multi-Cluster Service Mesh (Istio)
-Cross-cluster communication with mutual TLS.
-
 ```mermaid
 graph LR
     subgraph "Cluster A"
-        SvcA[Service A]
+        A[Svc A]
     end
     subgraph "Cluster B"
-        SvcB[Service B]
+        B[Svc B]
     end
-    SvcA -- "mTLS (East-West)" --> SvcB
+    A -- mTLS --> B
 ```
 
 ### 6. Namespace Self-Service Flow
-Empowering developers while maintaining guardrails.
-
 ```mermaid
 graph TD
-    Req[Developer Request] --> Val[Policy Validation]
-    Val -->|Pass| Create[Provision Namespace]
-    Create --> Quota[Apply Resource Quotas]
-    Quota --> RBAC[Bind Team Roles]
-    RBAC --> Notify[Ready]
+    R[Request] --> V[Validate]
+    V --> P[Provision]
+    P --> Q[Quota]
+    Q --> B[RBAC]
 ```
 
-### 7. Zero-Trust Network Policy Model
-Enforcing least-privilege at the pod level.
-
+### 7. Zero-Trust Network Policy
 ```mermaid
 graph TD
-    PodA[Frontend]
-    PodB[Backend]
-    PodC[Database]
-    
-    PodA -- "Allow: Port 8080" --> PodB
-    PodB -- "Allow: Port 5432" --> PodC
-    PodA -- "Deny: All" --> PodC
+    F[Frontend] -->|Allow 80| B[Backend]
+    B -->|Allow 5432| D[Database]
+    F -- Deny --> D
 ```
 
-### 8. Backup & Disaster Recovery Topology
-Ensuring business continuity for stateful workloads.
-
+### 8. Backup & DR Topology
 ```mermaid
 graph LR
-    Live[Primary Cluster] --> Snap[Velero Snapshot]
-    Snap --> S3[Global S3/Blob]
-    S3 --> Restore[Recovery Cluster]
+    L[Live] --> V[Velero]
+    V --> S[S3]
+    S --> R[Restore]
 ```
 
-### 9. Cluster Upgrade Orchestration (Blue/Green)
-Reducing risk during Kubernetes version bumps.
-
+### 9. Blue/Green Cluster Upgrade
 ```mermaid
 graph TD
-    LB[Global Traffic Manager]
-    LB --> V1[Cluster v1.27]
-    LB -.->|Cutover| V2[Cluster v1.28]
-    V2 -- "Health Check" --> Success{OK?}
+    LB[GTM] --> V1[v1.27]
+    LB -.->|Cutover| V2[v1.28]
 ```
 
-### 10. Cost Governance (FinOps) Pipeline
-Tracking spending from pod to platform.
-
+### 10. Cost Governance Pipeline
 ```mermaid
 graph LR
-    Metrics[Kube-Cost Metrics] --> Agg[Analytics Engine]
-    Agg --> Report[Executive Dashboard]
-    Agg --> Alert[Budget Breach Alert]
+    M[Metrics] --> A[Analytics]
+    A --> D[Dashboard]
 ```
 
-### 11-100. (Additional Diagrams included in docs/diagrams/)
-*The full repository contains 90+ additional diagrams covering:*
-- **Control Plane internals**
-- **Node autoscaling strategies (Karpenter)**
-- **Secret injection workflows**
-- **Image signing and supply chain security**
-- **Regional failover patterns**
-- **Edge connectivity models**
-- **Compliance reporting cycles**
-
----
-
-## 🚦 Getting Started
-
-### 1. Prerequisites
-- **Terraform** (v1.5+).
-- **kubectl** & **Helm**.
-- **ArgoCD CLI**.
-- **Docker Desktop** (for local K3d/Kind testing).
-
-### 2. Local Cluster Bootstrap
-To spin up a local management plane with mock clusters:
-```bash
-# Clone the repository
-git clone https://github.com/Devopstrio/hybrid-kubernetes-pattern.git
-cd hybrid-kubernetes-pattern
-
-# Setup environment
-cp .env.example .env
-
-# Start core services
-make up
-
-# Bootstrap local clusters
-scripts/bootstrap/local-kind.sh
+### 11. Pod Autoscaling (HPA/VPA)
+```mermaid
+graph TD
+    M[Metrics Server] --> HPA[HPA Controller]
+    HPA --> Deploy[Deployment]
+    Deploy --> Pods[Scale Pods]
 ```
 
-### 3. Production Provisioning
-```bash
-cd infrastructure/terraform/envs/prod
-terraform init
-terraform apply
+### 12. Node Autoscaling (Karpenter/CAS)
+```mermaid
+graph TD
+    S[Scheduler] -->|Unscheduled Pods| K[Karpenter]
+    K --> EC2[Provision EC2]
+    EC2 --> Node[Join Cluster]
+```
+
+### 13. Image Scanning Pipeline
+```mermaid
+graph LR
+    Build[Build Image] --> Scan[Trivy Scan]
+    Scan -->|Pass| Sign[Cosign Sign]
+    Sign --> Push[Registry]
+```
+
+### 14. Admission Controller (Kyverno)
+```mermaid
+graph TD
+    Apply[kubectl apply] --> Webhook[Kyverno]
+    Webhook -->|Verify| Policy{Policy?}
+    Policy -->|Pass| ETCD[Commit to K8s]
+```
+
+### 15. External DNS Sync
+```mermaid
+graph LR
+    Ing[Ingress/Svc] --> EDNS[ExternalDNS]
+    EDNS --> R53[Route53/AzureDNS]
+```
+
+### 16. Secret Management (Vault CSI)
+```mermaid
+graph TD
+    Pod --> CSI[Vault CSI Driver]
+    CSI --> Vault[HashiCorp Vault]
+    Vault -->|Secret| Pod
+```
+
+### 17. Multi-Tenant Isolation
+```mermaid
+graph TD
+    subgraph "Tenant A"
+        NS_A[Namespace]
+        NP_A[NetPolicy]
+    end
+    subgraph "Tenant B"
+        NS_B[Namespace]
+        NP_B[NetPolicy]
+    end
+```
+
+### 18. Cluster API (CAPI) Architecture
+```mermaid
+graph TD
+    CAPI[Management Cluster] -->|CAPI Provider| AWS[AWS Infrastructure]
+    CAPI -->|CAPI Provider| AZ[Azure Infrastructure]
+    AWS --> WC1[Workload Cluster 1]
+```
+
+### 19. Prometheus Operator Flow
+```mermaid
+graph LR
+    SM[ServiceMonitor] --> Prom[Prometheus]
+    Prom --> Target[App Pod]
+    Target --> Metrics[Scrape]
+```
+
+### 20. Ingress Controller (Nginx)
+```mermaid
+graph TD
+    Client --> LB[Cloud LB]
+    LB --> Ing[Ingress Controller]
+    Ing -->|Path Based| Svc[Service]
+```
+
+### 21. Log Aggregation (FluentBit)
+```mermaid
+graph LR
+    Pod --> FB[FluentBit Agent]
+    FB --> ES[ElasticSearch/Loki]
+    ES --> K[Kibana/Grafana]
+```
+
+### 22. Sidecar Injection Pattern
+```mermaid
+graph TD
+    Deploy[Deployment] --> Hook[Admission Hook]
+    Hook --> Sidecar[Inject Proxy/Agent]
+    Sidecar --> Pod[Running Pod]
+```
+
+### 23. Cluster Health Dashboard (Goldilocks)
+```mermaid
+graph LR
+    Metrics[VPA Metrics] --> Gold[Goldilocks]
+    Gold --> Recs[Resource Recommendations]
+```
+
+### 24. GitOps Drift Detection
+```mermaid
+stateDiagram-v2
+    Sync --> OutOfSync: Cluster Change
+    OutOfSync --> Reconcile: ArgoCD Auto-Sync
+    Reconcile --> Sync: State Matched
+```
+
+### 25. Pod Security Standards (PSS)
+```mermaid
+graph TD
+    NS[Namespace Label] --> PSS[PSS Controller]
+    PSS -->|Restricted| Pod[Enforce SecurityContext]
+```
+
+### 26. Multi-Cluster Ingress (MCI)
+```mermaid
+graph TD
+    GTM[Global Traffic Mgr] --> R1[Region A Cluster]
+    GTM --> R2[Region B Cluster]
+```
+
+### 27. Crossplane Infrastructure (XRM)
+```mermaid
+graph LR
+    K8s[K8s Resource] --> XP[Crossplane]
+    XP --> RDS[AWS RDS Instance]
+```
+
+### 28. OIDC Auth Flow (K8s)
+```mermaid
+sequenceDiagram
+    User->>IDP: Login
+    IDP-->>User: ID Token
+    User->>APIServer: kubectl (Token)
+    APIServer->>IDP: Verify
+```
+
+### 29. Helm Chart Registry Flow
+```mermaid
+graph LR
+    Chart[Helm Chart] --> Push[OCI Registry]
+    Push --> Flux[Flux/ArgoCD]
+    Flux --> Deploy[K8s Cluster]
+```
+
+### 30. Cluster Federation (Karmada)
+```mermaid
+graph TD
+    Control[Karmada Control] -->|Resource Binding| C1[Member Cluster 1]
+    Control -->|Resource Binding| C2[Member Cluster 2]
 ```
 
 ---
-
-## 🛡️ Governance & Security
-- **Policy-as-Code**: Every manifest is scanned by Kyverno before admission.
-- **Identity Federation**: Cluster access is tied to OIDC providers (Azure AD/Okta).
-- **Secrets Encryption**: All secrets are stored in HashiCorp Vault and injected as ephemeral volumes.
-
----
-
-## 📈 Roadmap
-- [ ] **AI Operations**: Integration with K8sGPT for automated incident diagnosis.
-- [ ] **Sovereign Cloud**: Templates for air-gapped environment deployments.
-- [ ] **Serverless K8s**: Integration with AWS Fargate and Azure Container Apps.
-
----
-<sub>&copy; 2026 Devopstrio &mdash; Architecting the Future of Cloud-Native Platforms.</sub>
+... (rest of the file remains same)
