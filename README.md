@@ -1,21 +1,19 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/Devopstrio/.github/main/assets/Browser_logo.png" height="150" alt="Hybrid Kubernetes Platform Patterns Logo" />
+<img src="https://raw.githubusercontent.com/Devopstrio/.github/main/assets/Browser_logo.png" height="150" alt="Hybrid Kubernetes Pattern Logo" />
 
-<h1>Hybrid Kubernetes Platform Patterns</h1>
+<h1>Hybrid Kubernetes Pattern</h1>
 
-<p><strong>The Definitive Enterprise Reference Architecture for Multi-Cloud, Multi-Region, and Hybrid-Cloud Kubernetes Orchestration</strong></p>
+<p><strong>The Institutional-Grade Platform for Multi-Cloud Cluster Orchestration, Hybrid Service Mesh, and GitOps-Driven Fleet Management.</strong></p>
 
-[![Standard: ALZ--Aligned](https://img.shields.io/badge/Standard-ALZ--Aligned-blue.svg?style=for-the-badge&labelColor=000000)]()
-[![Status: Production--Ready](https://img.shields.io/badge/Status-Production--Ready-indigo.svg?style=for-the-badge&labelColor=000000)]()
-[![Security: Zero--Trust](https://img.shields.io/badge/Security-Zero--Trust-green.svg?style=for-the-badge&labelColor=000000)]()
-[![GitOps: ArgoCD--Flux](https://img.shields.io/badge/GitOps-ArgoCD--Flux-orange?style=for-the-badge&labelColor=000000)]()
-[![Platform: Multi--Cloud](https://img.shields.io/badge/Platform-Multi--Cloud-ff69b4?style=for-the-badge&labelColor=000000)]()
+[![Standard: Kubernetes-Excellence](https://img.shields.io/badge/Standard-K8s--Excellence-blue.svg?style=for-the-badge&labelColor=000000)]()
+[![Status: Production--Ready](https://img.shields.io/badge/Status-Production--Ready-emerald.svg?style=for-the-badge&labelColor=000000)]()
+[![Focus: Multi--Cluster--Orchestration](https://img.shields.io/badge/Focus-Multi--Cluster--Orchestration-indigo.svg?style=for-the-badge&labelColor=000000)]()
 
 <br/>
 
 > **"Infrastructure is code; platform is a service."** 
-> Hybrid Kubernetes Platform Patterns is an institutional-grade blueprint designed for organizations operating at global scale, providing standardized fleet management across AWS, Azure, GCP, and on-premises VMware environments.
+> **Hybrid Kubernetes Pattern** is an enterprise-grade platform designed to provide a secure, measurable, and highly automated foundation for global container operations. It orchestrates the complex lifecycle of Kubernetes—from multi-cloud cluster provisioning and cross-cluster service mesh to GitOps-driven application delivery and unified cluster auditing.
 
 </div>
 
@@ -23,354 +21,262 @@
 
 ## 🏛️ Executive Summary
 
-The **Hybrid Kubernetes Platform Patterns** repository is an institutional-grade reference architecture designed for CTOs, Principal Platform Engineers, and Global Infrastructure Leaders. As enterprises scale their container footprints, the challenge shifts from managing a single cluster to orchestrating a global fleet of heterogeneous clusters.
+Fragmented cluster management and manual application deployments are strategic operational liabilities; lack of centralized Kubernetes orchestration is a primary barrier to organizational cloud-native maturity. Organizations fail to maintain a secure container foundation not because of a lack of clusters, but because of fragmented pattern standards, lack of automated manifest validation, and an inability to orchestrate cluster landing zones with operational precision.
 
-This platform provides the **Blueprints for the Sovereign Cloud**. It demonstrates how to achieve operational consistency using **GitOps (ArgoCD)**, **Crossplane (IaC)**, and **Kyverno (Policy)**. By centralizing management in a "Hub" cluster and federating workloads across "Spoke" clusters in AWS EKS, Azure AKS, and Google GKE, organizations can eliminate cloud-provider lock-in while maintaining a unified security and governance posture.
-
----
-
-## 📉 The "Cluster Sprawl" Problem
-
-Enterprises facing the complexity of multi-cluster operations encounter:
-- **Operational Drift**: Different versions, plugins, and security configurations across clusters.
-- **Identity Fragmentation**: Lack of unified RBAC linked to enterprise OIDC providers.
-- **Governance Gaps**: Difficulty in enforcing network policies and resource quotas globally.
-- **Deployment Velocity**: Manual cluster provisioning slowing down application teams.
+This platform provides the **Kubernetes Intelligence Plane**. It implements a complete **Enterprise Kubernetes-Pattern-as-Code Framework**, enabling Platform and SRE teams to manage global cluster fleets as first-class citizens. By automating the identification of resource bottlenecks through real-time telemetry analysis and orchestrating the deployment of secure cross-cluster service meshes, we ensure that every organizational workload—from core datacenter services to distributed edge pods—is orchestrated by default, audited for history, and strictly aligned with institutional Kubernetes frameworks.
 
 ---
 
-## 🚀 Strategic Drivers & Business Outcomes
+## 📐 Architecture Storytelling: Principal Reference Models
 
-### 🎯 Strategic Drivers
-- **Hybrid Cloud Strategy**: The ability to burst to public cloud while keeping sensitive workloads on-premises.
-- **Regulatory Sovereignty**: Deploying clusters in specific regions to comply with data residency laws (GDPR/LGPD).
-- **Platform Engineering Maturity**: Providing a "Golden Path" for developers to consume K8s-as-a-Service.
+### 1. Principal Architecture: Global Hybrid Kubernetes & Orchestration Intelligence Plane
+This diagram illustrates the end-to-end flow from multi-cloud cluster provision and GitOps ingestion to cross-cluster service mesh, resource engineering, and institutional cluster auditing.
 
-### 💰 Business Outcomes
-- **50% Faster TTM**: Automated cluster provisioning and app deployment via GitOps.
-- **Zero-Trust K8s Security**: Default-deny network policies and OPA-based admission control.
-- **Unified Fleet Observability**: Single-pane-of-glass for logs, metrics, and costs across all clouds.
+```mermaid
+graph LR
+    %% Subgraph Definitions
+    subgraph ClusterIngress["Hybrid & Multi-Cloud Ingress"]
+        direction TB
+        Cloud_Clusters["EKS / AKS / GKE / On-Prem"]
+        Workload_Telemetry["Pod & Node Metrics"]
+        GitOps_Source["ArgoCD / Flux Manifests"]
+    end
+
+    subgraph IntelligenceEngine["Orchestration Intelligence Hub"]
+        direction TB
+        API["FastAPI Orchestration Gateway"]
+        FleetManager["Multi-Cluster Fleet Orch"]
+        ResourceEng_Hub["Resource Quota & QoS Hub"]
+        MeshOrch["Cross-Cluster Service Mesh Hub"]
+    end
+
+    subgraph OperationsPlane["Distributed Kubernetes Fleet"]
+        direction TB
+        ClusterAPI_Workers["CAPI Provisioning Fleet"]
+        GitOps_Reconcilers["Managed App Delivery Agents"]
+        ServiceMesh_Gateways["Istio / Linkerd Hybrid Proxies"]
+    end
+
+    subgraph OperationsHub["Institutional Cluster Hub"]
+        direction TB
+        Scorecard["K8s Maturity Scorecard"]
+        Analytics["Fleet Health & Density Stats"]
+        Audit["Forensic K8s Metadata Lake"]
+    end
+
+    subgraph DevOps["Kubernetes-Pattern-as-Code Framework"]
+        direction TB
+        TF["Terraform Cluster Modules"]
+        DriftBot["Manifest & Config Drift Validator"]
+        ChatOps["Cluster Operations Hub"]
+    end
+
+    %% Flow Arrows
+    ClusterIngress -->|1. Submit Cluster Request| API
+    API -->|2. Orchestrate Fleet| FleetManager
+    FleetManager -->|3. Apply Resource Policy| ResourceEng_Hub
+    ResourceEng_Hub -->|4. Orchestrate Mesh| MeshOrch
+    
+    MeshOrch -->|5. Execute Provision| OperationsPlane
+    OperationsPlane -->|6. Notify Status| ChatOps
+    API -->|7. Visualize Health| Scorecard
+    
+    Scorecard -->|8. Track Maturity| Analytics
+    Scorecard -->|9. Record Provision| Audit
+    
+    TF -->|10. Provision Backbone| IntelligenceEngine
+    DriftBot -->|11. Inject Config Risk| FleetManager
+    Audit -->|12. Improve Orchestration| ClusterAPI_Workers
+
+    %% Styling
+    classDef ingress fill:#f5f5f5,stroke:#616161,stroke-width:2px;
+    classDef intel fill:#e8eaf6,stroke:#1a237e,stroke-width:2px;
+    classDef operations fill:#e1f5fe,stroke:#01579b,stroke-width:2px;
+    classDef ops fill:#ede7f6,stroke:#311b92,stroke-width:2px;
+    classDef devops fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+
+    class ClusterIngress ingress;
+    class IntelligenceEngine intel;
+    class OperationsPlane operations;
+    class OperationsHub ops;
+    class DevOps devops;
+```
+
+### 2. The Hybrid Kubernetes Lifecycle Flow
+The continuous path of a hybrid Kubernetes pattern from initial provision (cluster) and connection (mesh) to active security policy, deployment (GitOps), and institutional forensic auditing.
+
+```mermaid
+graph LR
+    Provision["Provision (Cluster)"] --> Connect["Connect (Mesh)"]
+    Connect --> Deploy["Deploy (GitOps)"]
+    Deploy --> Audit["Audit & Report"]
+```
+
+### 3. Distributed Hybrid Kubernetes Topology
+Strategically orchestrating clusters across global environments (EKS, AKS, GKE, On-Prem, Edge), providing a unified institutional view of global container health and fleet readiness.
+
+```mermaid
+graph LR
+    EKS["Cloud: AWS EKS Fleet"] -->|Sync| Hub["Unified Cluster Hub"]
+    AKS["Cloud: Azure AKS Fleet"] -->|Sync| Hub
+    OnPrem["Local: VMware/Bare-Metal"] -->|Sync| Hub
+    Hub --- Logic["Global Fleet Engine"]
+```
+
+### 4. Cross-Cluster Service Mesh & Traffic Hub Flow
+Executing complex logic for securing the bridge between Istio/Linkerd service meshes across hybrid boundaries, ensuring every organizational service is connected and verified against institutional standards.
+
+```mermaid
+graph TD
+    Istio["Istio: Mesh Registry Data"] --> Bridge["Rule: Multi-Cluster Mesh Hub"]
+    Bridge --> Linkerd["Rule: Linkerd SMI Map"]
+    Linkerd -->|Evaluate| Context["PATH: Global Mesh View"]
+    Context --- Estimate["Mesh Confidence Score"]
+```
+
+### 5. Secure GitOps & Continuous Delivery Flow
+Automatically managing the lifecycle of applications across multi-cluster environments using ArgoCD/Flux, ensuring institutional deployment and security boundaries by default.
+
+```mermaid
+graph LR
+    Repo["GitOps Source Repo"] -->|Apply| Guard["ArgoCD & Flux Hub"]
+    Guard -->|Violate| Alert["Manifest Security Alert"]
+    Guard -->|Pass| Verify["Status: Synced Workload"]
+    Verify --- Audit["GitOps Compliance Log"]
+```
+
+### 6. Kubernetes Data Plane & Resource Engineering Flow
+Managing the lifecycle of a pod request, automatically enforcing institutional resource quotas and performance guarantees for critical workloads, ensuring zero-latency operational confidence.
+
+```mermaid
+graph LR
+    Pod["Workload Pod Request"] -->|Check| Gatekeeper["Resource Engineering Bot"]
+    Gatekeeper -->|Verify| Quota["CPU/Mem & QoS Check"]
+    Quota -->|Pass| Admit["Status: Scheduled Pod"]
+    Admit --- Audit["Resource Compliance Log"]
+```
+
+### 7. Institutional Kubernetes Maturity Scorecard
+Grading organizational performance based on key indicators: Cluster Hygiene Grade, Security Coverage, and Resource Efficiency Index.
+
+```mermaid
+graph TD
+    Post["K8s Health: 97%"] --> Risk["Governance Gap: 3%"]
+    Post --- C1["Hygiene Grade (100%)"]
+    Post --- C2["Security Coverage (95%)"]
+```
+
+### 8. Identity & RBAC for Kubernetes Governance
+Managing fine-grained access to orchestration hubs, provisioning workers, and audit logs between Cluster Architects, App Developers, and Platform Operators.
+
+```mermaid
+graph TD
+    Architect["Cluster Architect"] --> Hub["Manage fleet rules"]
+    Developer["App Developer"] --> Exec["Deploy workload checks"]
+    Operator["Platform Operator"] --> Audit["Verify Cluster Proofs"]
+```
+
+### 9. IaC Deployment: Kubernetes-Pattern-as-Code Framework
+Using modular Terraform to deploy and manage the versioned distribution of the orchestration tracking hubs, fleet management workers, and forensic metadata lakes.
+
+```mermaid
+graph LR
+    HCL["Infrastructure Code"] --> TF["Terraform Apply"]
+    TF --> Engine["K8s Control Plane"]
+    Engine --> Clusters["HA Validation Fleet"]
+```
+
+### 10. AIOps Cluster Drift & Risk Validation Flow
+Using advanced analytics to identify sudden surges in resource consumption, OOMKills, suspicious configuration drifts, or unusual pod pattern changes that could result in institutional risk.
+
+```mermaid
+graph LR
+    Drift["Cluster Change Event"] --> Analyzer["Drift Detection Bot"]
+    Analyzer -->|Anomaly| Alert["Fleet Integrity Alert"]
+    Analyzer -->|Normal| Pass["Status Optimal"]
+```
+
+### 11. Metadata Lake for Forensic Kubernetes Audit
+Storing long-term records of every cluster provisioned, every manifest change recorded, and every pod execution event for institutional record-keeping, compliance auditing, and post-provisioning forensics.
+
+```mermaid
+graph LR
+    Provision["Provision Interaction Event"] --> Stream["Forensic Stream"]
+    Stream --> Lake["K8s Metadata Lake"]
+    Lake --> Trends["Fleet Efficiency Trends"]
+```
 
 ---
 
-## 📐 Architecture Storytelling: 30+ Advanced Diagrams
+## 🏛️ Core Governance Pillars
 
-### 1. Executive Fleet Architecture
-*Visualizing the management plane orchestrating workloads across diverse cloud environments.*
-```mermaid
-graph TD
-    subgraph "Management Plane"
-        API[Platform API]
-        GitOps[ArgoCD Hub]
-    end
-    subgraph "Workload Plane"
-        EKS[AWS EKS Cluster]
-        AKS[Azure AKS Cluster]
-        VMW[VMware Tanzu Cluster]
-    end
-    API --> GitOps
-    GitOps --> EKS
-    GitOps --> AKS
-    GitOps --> VMW
-```
-
-### 2. Hybrid Connectivity Model (Hub-Spoke)
-*Secure communication between the central control plane and remote clusters.*
-```mermaid
-graph LR
-    Hub[Central Hub Cluster] -- Pull Model --> Agent[GitOps Agent]
-    Agent --> Cluster[Private K8s Cluster]
-```
-
-### 3. GitOps Application Lifecycle (ArgoCD)
-*The automated reconciliation loop for application state.*
-```mermaid
-sequenceDiagram
-    Git->>Argo: Git Push Webhook
-    Argo->>Git: Fetch Desired State
-    Argo->>Cluster: Compare & Reconcile
-    Cluster-->>Argo: Cluster State Updated
-    Argo-->>Git: Status: Synced
-```
-
-### 4. Cluster Onboarding Workflow
-*The automated journey of a new cluster into the fleet.*
-```mermaid
-graph TD
-    S[Provision: Terraform] --> I[Identity: OIDC Link]
-    I --> G[GitOps: Bootstrap]
-    G --> P[Policy: Base Guardrails]
-    P --> R[Ready: App Delivery]
-```
-
-### 5. Multi-Cluster Service Mesh (Istio)
-*Encrypted cross-cluster communication using mTLS.*
-```mermaid
-graph LR
-    subgraph "Cluster A (US-West)"
-        A[Service Alpha]
-    end
-    subgraph "Cluster B (EU-Central)"
-        B[Service Beta]
-    end
-    A -- Federated mTLS --> B
-```
-
-### 6. Namespace Self-Service Flow
-*Enabling developer autonomy with built-in guardrails.*
-```mermaid
-graph TD
-    R[Request: Portal] --> V[Validate: Policy]
-    V --> P[Provision: Namespace]
-    P --> Q[Assign: Resource Quota]
-    Q --> B[Apply: RBAC/NP]
-```
-
-### 7. Zero-Trust Network Policy (Cilium)
-*Layer 7 network security enforcement.*
-```mermaid
-graph TD
-    F[Frontend Pod] -->|Allow Port 80| B[Backend Pod]
-    B -->|Allow Port 5432| D[Database Pod]
-    F -- Blocked --> D
-```
-
-### 8. Backup & Disaster Recovery Topology
-*Standardized backup across multi-cloud environments.*
-```mermaid
-graph LR
-    L[Live Cluster] --> V[Velero Agent]
-    V --> S[Central S3/Blob Storage]
-    S --> R[Restore to Backup Cluster]
-```
-
-### 9. Blue/Green Cluster Upgrade Strategy
-*Zero-downtime upgrades for critical infrastructure.*
-```mermaid
-graph TD
-    LB[GTM] --> V1[Active v1.28]
-    LB -.->|Gradual Traffic Shift| V2[New v1.29]
-```
-
-### 10. Cost Governance Pipeline (KubeCost)
-*Visibility into cloud spend at the pod and department level.*
-```mermaid
-graph LR
-    M[Metrics: Prometheus] --> A[Analytics: KubeCost]
-    A --> D[Dashboard: Finance BU]
-```
-
-### 11. Pod Autoscaling (HPA/VPA)
-```mermaid
-graph TD
-    M[Metrics Server] --> HPA[HPA Controller]
-    HPA --> Deploy[Deployment]
-    Deploy --> Pods[Scale Pods Up/Down]
-```
-
-### 12. Node Autoscaling (Karpenter)
-```mermaid
-graph TD
-    S[Scheduler] -->|Pending Pods| K[Karpenter]
-    K --> EC2[Provision Spot/On-Demand]
-    EC2 --> Node[Join K8s Cluster]
-```
-
-### 13. Image Security Pipeline (Trivy)
-```mermaid
-graph LR
-    Build[Build] --> Scan[Vulnerability Scan]
-    Scan -->|Pass| Sign[Cosign Sign]
-    Sign --> Push[OCI Registry]
-```
-
-### 14. Admission Controller (Kyverno)
-```mermaid
-graph TD
-    Apply[kubectl apply] --> Webhook[Kyverno]
-    Webhook -->|Policy Check| Policy{Compliance?}
-    Policy -->|Pass| ETCD[Commit State]
-```
-
-### 15. External DNS Synchronization
-```mermaid
-graph LR
-    Ing[Ingress/Svc] --> EDNS[ExternalDNS]
-    EDNS --> Cloud[Route53/AzureDNS]
-```
-
-### 16. Secret Management (Vault CSI)
-```mermaid
-graph TD
-    Pod --> CSI[Vault CSI Driver]
-    CSI --> Vault[HashiCorp Vault]
-    Vault -->|Ephemeral Secret| Pod
-```
-
-### 17. Multi-Tenant Resource Isolation
-```mermaid
-graph TD
-    subgraph "Tenant A (Finance)"
-        NS_A[Namespace]
-        NP_A[NetPolicy]
-    end
-    subgraph "Tenant B (HR)"
-        NS_B[Namespace]
-        NP_B[NetPolicy]
-    end
-```
-
-### 18. Cluster API (CAPI) Architecture
-```mermaid
-graph TD
-    CAPI[Mgmt Cluster] -->|Provider AWS| AWS[EKS Infrastructure]
-    CAPI -->|Provider Azure| AZ[AKS Infrastructure]
-    AWS --> WC1[Workload Cluster]
-```
-
-### 19. Prometheus Operator Metrics Flow
-```mermaid
-graph LR
-    SM[ServiceMonitor] --> Prom[Prometheus]
-    Prom --> Target[App Pod]
-    Target --> Metrics[Scrape Endpoints]
-```
-
-### 20. Ingress Controller (Nginx/Gateway API)
-```mermaid
-graph TD
-    Client --> LB[Cloud LoadBalancer]
-    LB --> Ing[Ingress Controller]
-    Ing -->|Path Rules| Svc[K8s Service]
-```
-
-### 21. Distributed Log Aggregation (Loki)
-```mermaid
-graph LR
-    Pod --> FB[FluentBit]
-    FB --> Loki[Grafana Loki]
-    Loki --> Graf[Grafana Dash]
-```
-
-### 22. Sidecar Injection Pattern
-```mermaid
-graph TD
-    Deploy[Deployment] --> Hook[Admission Hook]
-    Hook --> Sidecar[Inject Envoy/Agent]
-    Sidecar --> Pod[Running Container]
-```
-
-### 23. Resource Optimization (Goldilocks)
-```mermaid
-graph LR
-    Metrics[VPA Data] --> Gold[Goldilocks]
-    Gold --> Recs[Resource Limit Recommendations]
-```
-
-### 24. GitOps Drift Detection Loop
-```mermaid
-stateDiagram-v2
-    Sync --> OutOfSync: Cluster Mutation
-    OutOfSync --> Detect: GitOps Controller
-    Detect --> Reconcile: Apply Git State
-    Reconcile --> Sync: Re-synced
-```
-
-### 25. Pod Security Standards (PSS) Enforcement
-```mermaid
-graph TD
-    NS[Namespace] --> PSS[PSS Controller]
-    PSS -->|Enforce| Pod[SecurityContext Check]
-```
-
-### 26. Global Traffic Management (MCI)
-```mermaid
-graph TD
-    GTM[Global Traffic Mgr] --> Cluster1[Region: US-East]
-    GTM --> Cluster2[Region: EU-West]
-```
-
-### 27. Infrastructure-as-Code (Crossplane)
-```mermaid
-graph LR
-    K8s[K8s Claim] --> XP[Crossplane]
-    XP --> RDS[AWS RDS Instance]
-```
-
-### 28. OIDC Authentication Flow (Kubelogin)
-```mermaid
-sequenceDiagram
-    User->>IDP: Login (SAML/OIDC)
-    IDP-->>User: ID Token
-    User->>APIServer: kubectl (Token)
-    APIServer->>IDP: Verify JWT
-```
-
-### 29. Helm Chart Registry Flow
-```mermaid
-graph LR
-    Chart[Helm Source] --> Push[OCI Registry]
-    Push --> Flux[Flux/ArgoCD]
-    Flux --> Deploy[K8s Cluster]
-```
-
-### 30. Cluster Federation (Karmada)
-```mermaid
-graph TD
-    Control[Karmada Control] -->|Resource Binding| C1[Member Cluster 1]
-    Control -->|Resource Binding| C2[Member Cluster 2]
-```
+1.  **Unified Fleet Coordination**: Maximizing resilience by centralizing all cluster measurement through a single institutional plane.
+2.  **Automated Cluster Provisioning**: Eliminating "manual cluster" scenarios through proactive orchestration and pattern verification.
+3.  **Sequential Resource Intelligence**: Ensuring zero-interruption operations through dependency-aware multi-cluster resource engineering.
+4.  **Zero-Trust Mesh Protection**: Automatically enforcing identity-based access and rule evaluation across all mesh tiers.
+5.  **Autonomous Operations Logic**: Guaranteeing reliability through automated industry-specific cluster monitoring runbooks.
+6.  **Full Cluster Auditability**: Immutable recording of every manifest change and cluster provision for institutional forensics.
 
 ---
 
 ## 🛠️ Technical Stack & Implementation
 
-### Core Platforms
-- **GitOps**: ArgoCD (Hub-Spoke architecture)
-- **IaC**: Terraform & Crossplane
-- **Policy**: Kyverno & OPA
-- **Observability**: Prometheus, Grafana, Loki
+### Orchestration Engine & APIs
+*   **Framework**: Python 3.11+ / FastAPI.
+*   **Fleet Engine**: Custom Python-based logic for multi-cloud Cluster-API (CAPI) provisioning and DORA-style cluster metrics.
+*   **Integrations**: Native connectors for AWS EKS, Azure AKS, Google GKE, and VMware Tanzu APIs.
+*   **Persistence**: PostgreSQL (Fleet Ledger) and Redis (Live Fleet State).
+*   **Auth Orchestrator**: Federated OIDC/SAML for least-privilege cluster management access.
 
-### Deployment Architecture
-- **Multi-Cloud**: AWS EKS, Azure AKS, Google GKE
-- **Hybrid**: VMware Tanzu / OpenShift
-- **Edge**: K3s / MicroK8s blueprints
+### Governance Dashboard (UI)
+*   **Framework**: React 18 / Vite.
+*   **Theme**: Dark, Blue, Indigo (Modern high-fidelity container aesthetic).
+*   **Visualization**: D3.js for cluster topologies and Recharts for fleet density analytics.
+
+### Infrastructure & DevOps
+*   **Runtime**: AWS EKS or Azure Kubernetes Service (AKS) for management plane.
+*   **Fleet Hub**: Managed event sourcing for immutable cluster security timeline reconstruction.
+*   **IaC**: Modular Terraform for deploying the cluster landing zone and validation fleet.
+
+---
+
+## 🏗️ IaC Mapping (Module Structure)
+
+| Module | Purpose | Real Services |
+| :--- | :--- | :--- |
+| **`infrastructure/fleet_hub`** | Central management plane | EKS, PostgreSQL, Redis |
+| **`infrastructure/clusters`** | Distributed cluster provisioners | Cluster-API (CAPI), Cloud APIs |
+| **`infrastructure/gitops`** | Multi-Cluster Manifest Hubs | ArgoCD, Flux, Webhooks |
+| **`infrastructure/auditing`** | Forensic cluster sinks | S3, Athena, Quicksight |
 
 ---
 
 ## 🚀 Deployment Guide
 
-### Local Development
+### Local Principal Environment
 ```bash
-# Clone the repository
+# Clone the pattern platform
 git clone https://github.com/devopstrio/hybrid-kubernetes-pattern.git
 cd hybrid-kubernetes-pattern
 
-# Launch management simulation
-make up
+# Configure environment
+cp .env.example .env
+
+# Launch the Hybrid K8s stack
+make init
+
+# Trigger a mock cluster provisioning and automated manifest validation simulation
+make simulate-fleet
 ```
 
-### CI/CD Pipeline
-- **Validation**: linting Helm charts and Terraform modules.
-- **Security**: Trivy scanning for base images.
-- **Promotion**: Automatic PR creation for staging -> prod environment promotion.
+Access the Management Portal at `http://localhost:3000`.
 
 ---
 
-## 🗺️ Strategic Roadmap
-- [ ] **Q3 2024**: Native integration with AI-driven resource right-sizing.
-- [ ] **Q4 2024**: Enhanced edge-computing blueprints for retail branches.
-- [ ] **Q1 2025**: Automated compliance reporting for PCI-DSS/HIPAA.
+## 📜 License
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-
 <div align="center">
-
-### 🛡️ Built by Devopstrio
-*Institutional-Grade Platforms for the Modern Enterprise*
-
-[Website](https://devopstrio.com) • [Contact](mailto:support@devopstrio.com) • [LinkedIn](https://linkedin.com/company/devopstrio)
-
-© 2024 Devopstrio. All rights reserved.
-
+  <p>© 2026 Devopstrio. All rights reserved.</p>
 </div>
